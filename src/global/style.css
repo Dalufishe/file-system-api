@@ -1,0 +1,53 @@
+/** The css files in this project is based on postcss. */
+/** View postcss.config.js & https://www.postcss.parts/ to see more. */
+/* 
+  * avilable features: 
+  * css nesting
+  * tailwindcss features
+  * auto prefixing
+  * cssnano
+*/
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  color: white;
+  background-color: black;
+  font-family: monospace;
+
+  option {
+    background-color: black;
+  }
+
+  .webgl {
+    background-color: black;
+  }
+
+  .cardDOM {
+    position: relative;
+
+    .loadingCard {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.3);
+      color: white;
+      font-size: 20px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      user-select: none;
+      white-space: nowrap;
+    }
+  }
+}
