@@ -4,20 +4,20 @@ import FileTree from "./FileTree/FileTree";
 import FilePreview from "./FilePreview/FilePreview";
 import sleep from "../../utils/sleep";
 
-async function getDirectoryHandle() {
-  const options = { mode: "readwrite" };
-  const directoryHandle = await window.showDirectoryPicker(options);
-  await saveDirectoryHandle(directoryHandle);
-  return directoryHandle;
-}
-
 export default function FileSystem() {
   const [dir, setDir] = useState({});
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<{
+    file: File;
+    fileHandle: FileSystemFileHandle;
+  }>();
+  const [directoryHandle, setDirectoryHandle] = useState();
 
   useEffect(() => {
     async function loadDirectory() {
       const directoryHandle = await getSavedDirectoryHandle();
+      for await (const entry of directoryHandle.values()) {
+      }
+      setDirectoryHandle(directoryHandle);
       if (directoryHandle) {
         const dir = await readDirectory(directoryHandle);
         setDir(dir);
@@ -28,12 +28,17 @@ export default function FileSystem() {
 
   const handleOpenDirectory = async () => {
     const directoryHandle = await getDirectoryHandle();
+    setDirectoryHandle(directoryHandle);
     const dir = await readDirectory(directoryHandle);
     setDir(dir);
   };
 
-  const handleFileOnClick = async (file: File) => {
-    setFile(file);
+  const handleFileOnClick = async (fileObject: {
+    file: File;
+    fileHandle: FileSystemFileHandle;
+  }) => {
+    console.log(fileObject);
+    setFile(fileObject);
     // const arraybuffer = await file.arrayBuffer();
     // const blob = new Blob([arraybuffer], { type: file.name });
     // const text = await file.text();
@@ -59,7 +64,7 @@ export default function FileSystem() {
           />
         </div>
       </div>
-      <FilePreview file={file} />
+      <FilePreview file={file?.file} fileHandle={file?.fileHandle} />
     </div>
   );
 }
@@ -73,6 +78,13 @@ function OpenFolderButton(props: { onClick: () => void }) {
       Open Folder
     </button>
   );
+}
+
+async function getDirectoryHandle() {
+  const options = { mode: "readwrite" };
+  const directoryHandle = await window.showDirectoryPicker(options);
+  await saveDirectoryHandle(directoryHandle);
+  return directoryHandle;
 }
 
 async function saveDirectoryHandle(directoryHandle) {

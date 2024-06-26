@@ -11,6 +11,7 @@ import {
 } from "react-icons/lu";
 
 const Dir = ({ name, item, fileOnClick, folderOnClick }) => {
+
   const [open, setOpen] = useState(false);
 
   const distinguishFileType = useCallback((name: string, type: string) => {
@@ -32,7 +33,7 @@ const Dir = ({ name, item, fileOnClick, folderOnClick }) => {
           {name}
         </>
       );
-    } 
+    }
     // don't know wtf
     else {
       return (
@@ -46,17 +47,17 @@ const Dir = ({ name, item, fileOnClick, folderOnClick }) => {
 
   return (
     <li className="pl-4">
-      {item instanceof File ? (
+      {item?.file && item?.file instanceof File ? (
         // file
         <span
           onClick={async () => {
             fileOnClick && fileOnClick(item);
           }}
           className="flex items-center pl-4 hover:underline"
-          title={"file | " + formatBytes(item.size)}
+          title={"file | " + formatBytes(item.file.size)}
         >
           <div className="flex items-center gap-2">
-            {distinguishFileType(name, item.type)}
+            {distinguishFileType(name, item.file.type)}
           </div>
         </span>
       ) : (

@@ -15,7 +15,7 @@ export default async function readDirectory(
       );
     } else {
       const file = await item.getFile();
-      files[item.name] = file;
+      files[item.name] = { file: file, fileHandle: item };
     }
   }
 
