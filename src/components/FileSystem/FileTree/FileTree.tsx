@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretRight } from "react-icons/ai";
 import formatBytes from "../../../utils/formatBytes";
 import {
@@ -15,6 +15,7 @@ const Dir = ({ name, item, fileOnClick, folderOnClick }) => {
 
   const distinguishFileType = useCallback((name: string, type: string) => {
     const spl = type.split("/")[0];
+    // image
     if (spl === "image") {
       return (
         <>
@@ -22,14 +23,18 @@ const Dir = ({ name, item, fileOnClick, folderOnClick }) => {
           {name}
         </>
       );
-    } else if (spl === "text" || spl === "application") {
+    }
+    // text / js files
+    else if (spl === "text" || spl === "application") {
       return (
         <>
           <LuFileText />
           {name}
         </>
       );
-    } else {
+    } 
+    // don't know wtf
+    else {
       return (
         <>
           <LuFile />

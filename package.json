@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@emotion/css": "^11.11.2",
+    "@types/lodash": "^4.17.5",
+    "@types/pubsub-js": "^1.8.6",
+    "cssnano": "^7.0.3",
     "lodash": "^4.17.21",
     "nanoid": "^5.0.7",
     "pubsub-js": "^1.9.4",
